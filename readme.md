@@ -1,72 +1,167 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+# MeetUp API TEST
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+This repo contains code for Test Assignment. Following technology/platform used to develope
+  - Laravel 5.8 (requires at least PHP 7.1.3)
+  - MySQL 5.7
+  - Composer
+  - Git
+  - PHP 7.3, Apache Server, etc
 
-## About Laravel
+# Deploying the Project
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+  - Clone this repo into the root of Apache server and goto the directory
+  - Run following to install Laravel Framework
+  - ```sh
+    $ composer install
+    ```
+  - Copy .env.example as .env (if .env is not already created)
+  - Change database credentials in .env
+  - Run following to create required database table
+  - ```sh
+    $ php artisan migrate
+    ```
+# Running the Project
+  - Run following to start the deployment server
+  - ```sh
+    $ php artisan serve
+    ```
+  - By default the server will start on <http://127.0.0.1:8000>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+# API
+  - Register (Multiple entries can be created)
+  -- **POST** http://127.0.0.1:8000/api/participants
+  -- Sample Request
+   ```sh
+      {
+    "data": [
+	    {
+		    "name": "NIRMEET SANGHANI",
+		    "age": 30,
+		    "dob": "1990-01-05",
+		    "profession": "IT",
+		    "no_of_guests": 2,
+		    "address": "Kandivali"
+		 },
+		 {
+		    "name": "RAM",
+		    "age": 25,
+		    "dob": "1995-01-05",
+		    "profession": "BPO",
+		    "no_of_guests": 0,
+		    "address": "Malad"
+		 },
+	    ]
+    }
+```
+ --Response
+```sh
+{
+    "status": 200,
+    "payload": [
+        {
+            "name": "NIRMEET SANGHANI",
+            "age": 30,
+            "dob": "1990-01-01",
+            "profession": "IT",
+            "no_of_guests": 2,
+            "address": "Kandivali",
+            "updated_at": "2020-11-02 19:14:16",
+            "created_at": "2020-11-02 19:14:16",
+            "id": 3
+        },
+        {
+            "name": "RAM",
+            "age": 25,
+            "dob": "1995-01-05",
+            "profession": "BPO",
+            "no_of_guests": 2,
+            "address": "Malad",
+            "updated_at": "2020-11-02 19:14:17",
+            "created_at": "2020-11-02 19:14:17",
+            "id": 4
+        }
+    ],
+    "message": "Data saved successfully"
+}
+```    
+  - UPDATE (Pass Primary Key in URL)
+  -- **PUT** http://127.0.0.1:8000/api/participants/1
+  -- Sample Request
+```sh
+{
+   "name": "NIRMEET SANGHANI ABCD",
+   "age": 35,
+   "dob": "1990-04-20",
+   "profession": "SEN IT",
+   "no_of_guests": 1,
+   "address": "Kandivali EAST"
+}
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+-- Sample Response
+```sh
+{
+    "status": 200,
+    "payload": {
+        "id": 1,
+        "name": "NIRMEET SANGHANI ABCD",
+        "age": 35,
+        "dob": "1990-04-20",
+        "profession": "SEN IT",
+        "no_of_guests": 1,
+        "address": "Kandivali EAST",
+        "created_at": "2020-11-02 15:06:31",
+        "updated_at": "2020-11-02 18:15:28"
+    },
+    "message": "Data updated successfully"
+}
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- LIST (Paginate to show 10 records, pass page=page_no in url)
+-- **GET** http://127.0.0.1:8000/api/participants?page=1
+-- Sample Response
+```sh
+{
+    "status": 200,
+    "payload": {
+        "current_page": 1,
+        "data": [
+            {
+                "id": 1,
+                "name": "NIRMEET SANGHANI",
+                "age": 30,
+                "dob": "1990-04-15",
+                "profession": "IT",
+                "no_of_guests": 2,
+                "address": "Kandivali",
+                "created_at": "2020-11-02 18:31:35",
+                "updated_at": "2020-11-02 18:31:35"
+            },
+            {
+                "id": 2,
+                "name": "NIRMEET SANGHANI",
+                "age": 30,
+                "dob": "1990-04-15",
+                "profession": "IT",
+                "no_of_guests": 2,
+                "address": "Kandivali",
+                "created_at": "2020-11-02 18:31:35",
+                "updated_at": "2020-11-02 18:31:35"
+            }
+        ],
+        "first_page_url": "http://127.0.0.1:8000/api/participants?page=1",
+        "from": 1,
+        "last_page": 1,
+        "last_page_url": "http://127.0.0.1:8000/api/participants?page=1",
+        "next_page_url": null,
+        "path": "http://127.0.0.1:8000/api/participants",
+        "per_page": 10,
+        "prev_page_url": null,
+        "to": 2,
+        "total": 2
+    },
+    "message": "Data retrieved successfully."
+}
+```
+**THANK YOU!**
