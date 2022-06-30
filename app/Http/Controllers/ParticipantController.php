@@ -50,42 +50,14 @@ class ParticipantController extends Controller
                   ];
           return $response = Response::json($data, 200);
         }
-
-        $data = [
-                  'status'          => 400,
-                  'payload'         => [''],
-                  'message'         => 'Empty data, data not saved'
-                ];
-        return $response = Response::json($data, 400);
     }
 
     public function update(Request $request, Participant $participant)
     {
-      $postData = $request->all();
-      if(!empty($postData))
-      {
-
-        $participant->name          = $postData['name'];
-        $participant->age           = $postData['age'];
-        $participant->dob           = $postData['dob'];
-        $participant->profession    = $postData['profession'];
-        $participant->no_of_guests  = $postData['no_of_guests'];
-        $participant->address       = $postData['address'];
-        $participant->save();
-
-        $data = [
-                  'status'          => 200,
-                  'payload'         => $participant,
-                  'message'         => 'Data updated successfully'
-                ];
+        $requestData = $request->all();
+        $participant->update( $requestData );
+        $data = ['status'=> 200,'payload' => $participant, 'message' => 'Data updated successfully'];
         return $response = Response::json($data, 200);
-      }
-
-      $data = [
-                'status'          => 400,
-                'payload'         => [''],
-                'message'         => 'Empty data, data not updated'
-              ];
-      return $response = Response::json($data, 400);
+      
     }
 }
